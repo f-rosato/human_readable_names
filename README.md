@@ -14,8 +14,13 @@ Notably, the formatting can include a sequential number (not to be confused
 with the epoch number, which is added automatically when the list is rolled over
 to ensure uniqueness).
 The user can also provide her own source for names, customize the first
-number for sequential numbering, specify whether to sort the source and
+number for sequential numbering, specify whether to sort the source,
 customize the epoch number formatting.
+
+For slightly more advanced customization, you can also specify a function to apply to all
+the names (typical example: lambda n: n.upper(). The user is responsible for
+providing a function that returns a string. Collisions will be filtered away
+You can break stuff with this!).
 
 The initialized behavior can be overridden on the fly by using the
  ```give_name``` method instead of iterating.
@@ -43,7 +48,7 @@ Aquaman_5
 Aristotle_6
 
 >>>for _ in range(3):
-...    print(n.give_name('{number}_{name}_test', True))
+...    print(n.give_name('{number}_{name}_test', random=True))
 7_Predator_test
 8_Runabout_test
 9_Blizzard_test

@@ -1,1 +1,1 @@
-from .give_names import Namer
+from .namer import Namer
