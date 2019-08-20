@@ -17,7 +17,7 @@ Athena
 Aurora
 Avalanche
 >>> for n in range(10):
-...     print(give_name(numbered=True))
+...     print(give_name({name}_{number}))
 Axe_11
 Baccarat_12
 Backgammon_13
@@ -30,7 +30,4 @@ Batman_19
 Bayonet_20
 ```
 
-Future planned improvements:
-- name formatting
-- choose different string source
-- randomization
+Contributions to the default name source txt are more than welcome!
