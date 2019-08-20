@@ -12,7 +12,8 @@ class Namer:
                  first_number=1,
                  source_file=DEFAULT_SOURCE,
                  sort_source=True,
-                 epoch_format_string='_({})'):
+                 epoch_format_string='_({})',
+                 transformation=lambda name: name):
 
         """
         Namer is a class for generating human readable names. Its basic usage is as an
@@ -30,6 +31,7 @@ class Namer:
         :param source_file: the source file to pick the names from (one per row). The module has a built-in source
         with 300+ names.
         :param sort_source: whether to sort the names found in the source file. Default = True
+        :param transformation: a function to apply to the names pulled from the source. Default = lambda n:n (no-op)
         """
 
         self.dfs = default_format_string
@@ -38,6 +40,7 @@ class Namer:
         self.last_source = None
         self.names_list = None
         self.counter = None
+        self.transformation_fn = transformation
         self.epoch = None
         self.epoch_format = epoch_format_string
         self.sort = sort_source
@@ -60,7 +63,8 @@ class Namer:
             epoch_string = ''
     
         with open(source_file, 'r') as names_file:
-            self.names_list = list(set([name + epoch_string for name in names_file.read().splitlines()]))
+            self.names_list = list(set([self.transformation_fn(name) + epoch_string for name in names_file.read().splitlines()]))
+            # list-set for uniqueness
         if not self.names_list:
             raise ValueError('Empty source')
 
