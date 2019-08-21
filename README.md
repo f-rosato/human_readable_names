@@ -6,9 +6,9 @@ A single class, ```Namer```, is exposed.
 
 ```Namer``` is initialized with the following optional parameters:
 
-- ```default_format_string```: the python-style format string to use during iteration.
+- ```default_format_string```: the [python-style format string](https://docs.python.org/3.4/library/string.html#formatspec) to use during iteration.
     
-    Valid items for format_string:
+    Valid keyword items for format_string:
     - ```name```
     - ```number``` (the sequential number of the given name; is set to 0 at every call to r
 
@@ -32,7 +32,7 @@ You can break stuff with this!
 
 ### Interact with your ```Namer```
 The most basic usage of ```Namer``` is as an
-infinite iterable that generates names (when no name is left, the list is
+infinite iterable that generates names (when no name from the source is left, the list is
 rolled over and from then on an epoch index is added to the names).
 
 Instead of iterating (or using ```next``` directly), you can use the method  **```give_name```**.
@@ -91,5 +91,9 @@ Baccarat
 >>>print(next(n))
 Advantage
 ```
+
+TODOs:
+- [ ] Allow to have a generic text stream as source
+- [ ] Allow to filter the built-in names by category
 
 Contributions to the default name source txt are **more than welcome**!
