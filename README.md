@@ -2,33 +2,51 @@
 A package for getting human readable strings to use as identifiers, etc.
 A single class, ```Namer```, is exposed.
 
-The names are drawn by default from a built-in list.
- 
-Its most basic usage is as an
-infinite iterable that generates names (when no name is left, the list is
-rolled over and an epoch index is added to the names).
+### Initialize your ```Namer```
 
-```Namer``` is initialized with optional parameters for defining the base
-formatting and whether to pick the names at random.
-Notably, the formatting can include a sequential number (not to be confused
-with the epoch number, which is added automatically when the list is rolled over
-to ensure uniqueness).
-The user can also provide her own source for names, customize the first
-number for sequential numbering, specify whether to sort the source,
-customize the epoch number formatting.
+```Namer``` is initialized with the following optional parameters:
 
-For slightly more advanced customization, you can also specify a function to apply to all
-the names. (Typical example: ```lambda n: n.upper()```. The user is responsible for
+- ```default_format_string```: the python-style format string to use during iteration.
+    
+    Valid items for format_string:
+    - ```name```
+    - ```number``` (the sequential number of the given name; is set to 0 at every call to r
+
+    Default: ```"{name}"```.
+
+- ```default_random```: whether to pick the names at random from the underlying list. 
+
+    Default = ```False```
+- ```first_number```: the first number to use for the built-in sequential numbering.
+- ```source_file```: the source file to pick the names from (one per row). __The module has a built-in default source
+with 300+ names.__
+- ```sort_source```: whether to sort the names found in the source file. 
+    
+    Default: ```True```
+- ```transformation```: a function to apply to the names pulled from the source before formatting. The user is responsible for
 providing a function that returns a string. Collisions will be filtered away.
-You can break stuff with this!).
+You can break stuff with this! 
 
-The initialized behavior can be overridden on the fly by using the
- ```give_name``` method instead of iterating.
+    Default: ```lambda n:n  #(no-op)```
+ 
 
-The ```Namer``` can be reset with the ```reset``` method. Once the ```Namer```
-is reset, the uniqueness of the names is no more guaranteed!
+### Interact with your ```Namer```
+The most basic usage of ```Namer``` is as an
+infinite iterable that generates names (when no name is left, the list is
+rolled over and from then on an epoch index is added to the names).
 
-Example of usage:
+Instead of iterating (or using ```next``` directly), you can use the method  **```give_name```**.
+This also allows you, if you want, to override the initialized behavior temporarily and on the fly: you can change formatting and pick randomness.
+
+The ```Namer``` can be reset with the **```reset```** method. Once the ```Namer```
+is reset, the uniqueness of the names is no more guaranteed! When resetting, you have the opportunity to pass the following parameters:
+
+- ```source_file```: same as when initializing.
+    
+- ```epoch```: the epoch to start with. Default: ```0``` (no epoch index displayed)
+
+
+### Usage example
 
 ```
 >>>from random import seed  # just for repeatability
